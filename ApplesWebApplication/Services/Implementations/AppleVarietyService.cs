@@ -23,7 +23,7 @@ namespace ApplesWebApplication.Services.Implementations
 
         public async Task<IReadOnlyCollection<AppleVariety>> GetAppleVarietiesAsync()
         {
-            return await _dbContext.AppleVarieties.Include(v => v.Regions).ToListAsync()
+            return await _dbContext.AppleVarieties.ToListAsync()
                 .ContinueWith(x => new ReadOnlyCollection<AppleVariety>(x.Result) as IReadOnlyCollection<AppleVariety>);
         }
 

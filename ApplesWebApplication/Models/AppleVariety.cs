@@ -11,6 +11,7 @@ namespace ApplesWebApplication.Models
     {
         public int Id { get; set; }
 
+        [Required]
         public string Name { get; set; }
 
         public double AvgWeight { get; set; }

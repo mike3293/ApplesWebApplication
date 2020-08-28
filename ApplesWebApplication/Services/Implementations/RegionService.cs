@@ -1,12 +1,11 @@
 ﻿using ApplesWebApplication.Models;
 using ApplesWebApplication.Services.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
+using System.Web.Http;
 
 namespace ApplesWebApplication.Services.Implementations
 {
@@ -23,7 +22,7 @@ namespace ApplesWebApplication.Services.Implementations
 
         public async Task<IReadOnlyCollection<Region>> GetRegionsAsync()
         {
-            return await _dbContext.Regions.Include(r => r.AppleVarieties).ToListAsync()
+            return await _dbContext.Regions.ToListAsync()
                 .ContinueWith(x => new ReadOnlyCollection<Region>(x.Result) as IReadOnlyCollection<Region>);
         }
 

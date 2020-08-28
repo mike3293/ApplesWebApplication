@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace ApplesWebApplication.Controllers
 {
+    [RoutePrefix("api/appleRegions")]
     public class RegionsController : ApiController
     {
         private readonly IRegionService _regionService;
@@ -20,6 +21,7 @@ namespace ApplesWebApplication.Controllers
         }
 
 
+        [Route("")]
         public async Task<IReadOnlyCollection<Region>> Get()
         {
             var regions = await _regionService.GetRegionsAsync();
@@ -27,6 +29,8 @@ namespace ApplesWebApplication.Controllers
             return regions;
         }
 
+        [Route("{id:int}")]
+        [HttpGet]
         public async Task<IHttpActionResult> GetById(int id)
         {
             var region = await _regionService.GetRegionAsync(id);
@@ -38,31 +42,24 @@ namespace ApplesWebApplication.Controllers
             return Ok(region);
         }
 
-        public async Task<IHttpActionResult> Post([FromBody] Region region)
+        [Route("")]
+        [HttpPost]
+        public async Task<IHttpActionResult> CreateRegion([FromBody] Region region)
         {
-            if(region.Name == null)
-            {
-                return BadRequest();
-            }
-
             var createdRegion = await _regionService.CreateRegionAsync(region);
 
             return Ok(createdRegion);
         }
 
-        // TODO: validation for not null
+        [Route("{id:int}")]
         public async Task<IHttpActionResult> Put(int id, Region region)
         {
-            if (region.Name == null)
-            {
-                return BadRequest();
-            }
-
             await _regionService.UpdateRegionAsync(id, region);
 
             return Ok();
         }
 
+        [Route("{id:int}")]
         public async Task<IHttpActionResult> Delete(int id)
         {
             await _regionService.DeleteRegionAsync(id);
