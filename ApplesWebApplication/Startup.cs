@@ -38,20 +38,16 @@ namespace ApplesWebApplication
 
             appBuilder.Use(typeof(LoggerMiddleware));
 
-            appBuilder.Use(new Func<AppFunc, AppFunc>(next =>
-                env =>
+            appBuilder.Use(new Func<AppFunc, AppFunc>(next => 
+                async env =>
                 {
                     Stopwatch stopwatch = new Stopwatch();
 
                     Debug.WriteLine($"{DateTime.UtcNow} | Request start");
                     stopwatch.Start();
-                    Task nextResult = next(env).ContinueWith(_ => 
-                    {
-                        stopwatch.Stop();
-                        Debug.WriteLine($"{DateTime.UtcNow} | Request completed in: {stopwatch.Elapsed}");
-                    });
-
-                    return nextResult;
+                    await next(env);
+                    stopwatch.Stop();
+                    Debug.WriteLine($"{DateTime.UtcNow} | Request completed in: {stopwatch.Elapsed}");
                 }));
 
             appBuilder.UseWebApi(config);
