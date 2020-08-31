@@ -1,12 +1,10 @@
 ﻿using ApplesWebApplication.Models;
 using ApplesWebApplication.Services.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace ApplesWebApplication.Services.Implementations
 {

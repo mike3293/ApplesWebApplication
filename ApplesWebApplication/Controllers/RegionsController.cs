@@ -1,8 +1,5 @@
 ﻿using ApplesWebApplication.Models;
-using ApplesWebApplication.Services;
 using System.Collections.Generic;
-using System.Linq;
-using System.Data.Entity;
 using System.Web.Http;
 using ApplesWebApplication.Services.Interfaces;
 using System.Threading.Tasks;

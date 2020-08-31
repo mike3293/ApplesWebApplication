@@ -5,7 +5,6 @@ using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web.Http;
 
 namespace ApplesWebApplication.Services.Implementations
 {
