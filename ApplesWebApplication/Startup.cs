@@ -1,11 +1,17 @@
-﻿using ApplesWebApplication.Filters;
+﻿using ApplesWebApplication.AppStartup;
+using ApplesWebApplication.Filters;
 using ApplesWebApplication.Services;
 using ApplesWebApplication.Services.Implementations;
 using ApplesWebApplication.Services.Interfaces;
 using Ninject;
 using Owin;
+using System;
+using System.Diagnostics;
 using System.Net.Http.Formatting;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web.Http;
+using AppFunc = System.Func<System.Collections.Generic.IDictionary<string, object>, System.Threading.Tasks.Task>;
 
 namespace ApplesWebApplication
 {
@@ -29,6 +35,22 @@ namespace ApplesWebApplication
             var jsonFormatter = new JsonMediaTypeFormatter();
             jsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             config.Services.Replace(typeof(IContentNegotiator), new JsonContentNegotiator(jsonFormatter));
+
+            appBuilder.Use(typeof(LoggerMiddleware));
+
+            appBuilder.Use(new Func<AppFunc, AppFunc>(next =>
+                env =>
+                {
+                    Stopwatch stopwatch = new Stopwatch();
+
+                    Debug.WriteLine($"{DateTime.UtcNow} | Request start");
+                    stopwatch.Start();
+                    Task nextResult = next(env);
+                    stopwatch.Stop();
+                    Debug.WriteLine($"{DateTime.UtcNow} | Request completed in: {stopwatch.Elapsed}");
+
+                    return nextResult;
+                }));
 
             appBuilder.UseWebApi(config);
         }

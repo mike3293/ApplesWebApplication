@@ -112,6 +112,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppStartup\JsonContentNegotiator.cs" />
+    <Compile Include="AppStartup\LoggerMiddleware.cs" />
     <Compile Include="AppStartup\NinjectResolver.cs" />
     <Compile Include="Controllers\RegionsController.cs" />
     <Compile Include="Controllers\AppleVarietiesController.cs" />
