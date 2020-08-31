@@ -45,9 +45,11 @@ namespace ApplesWebApplication
 
                     Debug.WriteLine($"{DateTime.UtcNow} | Request start");
                     stopwatch.Start();
-                    Task nextResult = next(env);
-                    stopwatch.Stop();
-                    Debug.WriteLine($"{DateTime.UtcNow} | Request completed in: {stopwatch.Elapsed}");
+                    Task nextResult = next(env).ContinueWith(_ => 
+                    {
+                        stopwatch.Stop();
+                        Debug.WriteLine($"{DateTime.UtcNow} | Request completed in: {stopwatch.Elapsed}");
+                    });
 
                     return nextResult;
                 }));
