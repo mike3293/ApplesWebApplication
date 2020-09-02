@@ -16,6 +16,6 @@ namespace ApplesWebApplication.Models
         [NotMapped]
         public int[] RegionIds { get; set; }
 
-        public ICollection<Region> Regions { get; set; }
+        public IList<Region> Regions { get; set; }
     }
 }

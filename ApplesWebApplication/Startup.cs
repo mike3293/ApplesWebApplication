@@ -4,6 +4,8 @@ using ApplesWebApplication.Services;
 using ApplesWebApplication.Services.Implementations;
 using ApplesWebApplication.Services.Interfaces;
 using Ninject;
+using Ninject.Extensions.NamedScope;
+using Ninject.Web.Common;
 using Owin;
 using System;
 using System.Diagnostics;
@@ -38,7 +40,7 @@ namespace ApplesWebApplication
 
             appBuilder.Use(typeof(LoggerMiddleware));
 
-            appBuilder.Use(new Func<AppFunc, AppFunc>(next => 
+            appBuilder.Use(new Func<AppFunc, AppFunc>(next =>
                 async env =>
                 {
                     Stopwatch stopwatch = new Stopwatch();
@@ -57,9 +59,9 @@ namespace ApplesWebApplication
         {
             var kernel = new StandardKernel();
 
-            kernel.Bind<DBContext>().ToSelf();
-            kernel.Bind<IAppleVarietyService>().To<AppleVarietyService>();
-            kernel.Bind<IRegionService>().To<RegionService>();
+            kernel.Bind<DBContext>().ToSelf().InRequestScope();
+            kernel.Bind<IAppleVarietyService>().To<AppleVarietyService>().InCallScope();
+            kernel.Bind<IRegionService>().To<RegionService>().InCallScope();
 
             return kernel;
         }

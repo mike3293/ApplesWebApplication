@@ -5,8 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace ApplesWebApplication.Models
 {
     public enum ClimaticZone
-    { 
-        TropicalZone, 
+    {
+        TropicalZone,
         Subtropics,
         TemperateZone,
         ColdZone
@@ -24,6 +24,6 @@ namespace ApplesWebApplication.Models
         [NotMapped]
         public int[] AppleVarietyIds { get; set; }
 
-        public ICollection<AppleVariety> AppleVarieties { get; set; }
+        public IList<AppleVariety> AppleVarieties { get; set; }
     }
 }
